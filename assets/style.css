@@ -1,0 +1,21 @@
+.employee-card {
+    margin: 10px;
+    box-shadow: 10px 5px 5px black;
+    background-color: antiquewhite;
+}
+
+#managerCard {
+    background-color: goldenrod;
+}
+
+#engineerCard {
+    background-color: red;
+}
+
+#internCard {
+    background-color: green;
+}
+
+.jumbotron {
+    background-color: cadetblue;
+}

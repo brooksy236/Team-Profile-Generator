@@ -14,6 +14,14 @@ let team = []
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 
+function validateInput(value) {
+    
+}
+
+function validateEmail() {
+
+}
+
 function managerQuestions() {
     inquirer.prompt([
         {

@@ -20,6 +20,12 @@
   ## Usage Information
   - Run Node.js and enter the information at each prompt. When finished select finish and the HTML page will be generated for you.
 
+   ![](assets/screenshot.JPG)
+
+   - Fully repsonsive
+   
+   ![](assets/screenshot2.JPG)
+
   ## Contribution Guidelines
   - Contact me if you want to contribute.
 
