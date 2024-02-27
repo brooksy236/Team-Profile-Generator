@@ -45,8 +45,8 @@ function managerQuestions() {
         }
     ]).then((data) => {
         const manager = new Manager(data.manager, data.id, data.email, data.officeNumber)
-        team.push(data)
-        console.log(manager)
+        team.push(manager)
+        console.log(team)
         mainMenu();
 })
 }
@@ -71,7 +71,7 @@ function mainMenu() {
                 internQuestions();
                 break;
             case 'finish':
-                render();
+                renderPage();
                 break;
             }
         })
@@ -109,7 +109,7 @@ function engineerQuestions() {
     }
 ]).then((data) => {
     let engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
-    team.push(data);
+    team.push(engineer);
     console.log(team);
     mainMenu();
  });
@@ -152,10 +152,14 @@ function internQuestions() {
     }
 ]).then((data) => {
     let intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
-    team.push(data)
+    team.push(intern)
     console.log(team)
     mainMenu();
  });
+}
+
+function renderPage(team) {
+    fs.writeFileSync(outputPath, team, "utf-8")
 }
 
 managerQuestions();
