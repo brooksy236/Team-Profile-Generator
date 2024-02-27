@@ -10,11 +10,12 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 const Employee = require("./lib/Employee");
-
+let team = []
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 
-const managerQuestions = [
+function managerQuestions() {
+    inquirer.prompt([
         {
             type: 'input',
             message: 'Please enter the team manager\'s name:',
@@ -42,23 +43,54 @@ const managerQuestions = [
             message: 'Please enter the team manager\'s office number:',
             name: 'officeNumber'
         }
-    ]
+    ]).then((data) => {
+        const manager = new Manager(data.manager, data.id, data.email, data.officeNumber)
+        team.push(data)
+        console.log(manager)
+        mainMenu();
+})
+}
 
-
-const menuOptions = [
-    {
-        type: 'list',
-        message: 'Would you like to:',
-        name: 'menu1',
-        choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
+function mainMenu() {
+    inquirer.prompt([
+        {
+            type: 'list',
+            message: 'Would you like to:',
+            name: 'menu1',
+            choices: [  {name: 'Add an engineer', value: 'engineer'}, 
+            {name: 'Add an intern', value: 'intern'}, 
+            {name: 'Finish building the team', value: 'finish'}
+            ]
+        }
+    ]).then((data) => {
+        switch (data.menu1) {
+            case 'engineer':
+                engineerQuestions();
+                break;
+            case 'intern':
+                internQuestions();
+                break;
+            case 'finish':
+                render();
+                break;
+            }
+        })
     }
-]
 
-const engineerQuestions = [
+function engineerQuestions() {
+
+    inquirer.prompt([
     {
         type: 'input',
         message: 'Please enter the engineer\'s name?',
-        name: 'engineerName'
+        name: 'engineerName',
+        validate: function(value) {
+            if (value.length) {
+                return true;
+            } else {
+                return 'Please enter your name';
+            }
+        }
     },
     {
         type: 'input',
@@ -75,13 +107,26 @@ const engineerQuestions = [
         message: 'Please enter the engineer\'s GitHub username?',
         name: 'engineerGithub'
     }
-]
-
-const internQuestions = [
+]).then((data) => {
+    let engineer = new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub);
+    team.push(data);
+    console.log(team);
+    mainMenu();
+ });
+}
+function internQuestions() {
+    inquirer.prompt([
     {
         type: 'input',
         message: 'Please enter the intern\'s name?',
-        name: 'internName'
+        name: 'internName',
+        validate: function(value) {
+            if (value.length) {
+                return true;
+            } else {
+                return 'Please enter your name';
+            }
+        }
     },
     {
         type: 'input',
@@ -96,33 +141,22 @@ const internQuestions = [
     {
         type: 'input',
         message: 'Please enter the intern\'s School name?',
-        name: 'internSchool'
-    }
-]
-
- function main() {
-    let team = []
-
-    inquirer.prompt(managerQuestions).then((answers) => {
-        team.push(answers)
-        console.log(team)
-         inquirer.prompt(menuOptions).then((answers) => {
-
-             if (answers.menu1 === 'Add an engineer') {
-                 inquirer.prompt(engineerQuestions).then((answers) => {
-                    team.push(answers)
-                    console.log(team)
-                 })
-         } else if (answers.menu1 === 'Add an intern') {
-             inquirer.prompt(internQuestions).then((answers) => {
-                team.push(answers)
-                console.log(team)
-             })
+        name: 'internSchool',
+        validate: function(value) {
+            if (value.length) {
+                return true;
             } else {
-                console.log(`Your ${team} page is being built`)
+                return 'Please enter your name';
             }
-        })
-    })
+        }
+    }
+]).then((data) => {
+    let intern = new Intern(data.internName, data.internId, data.internEmail, data.internSchool)
+    team.push(data)
+    console.log(team)
+    mainMenu();
+ });
 }
 
-main();
+managerQuestions();
+
