@@ -46,7 +46,7 @@ function managerQuestions() {
     ]).then((data) => {
         const manager = new Manager(data.manager, data.id, data.email, data.officeNumber)
         team.push(manager)
-        console.log(team)
+        console.log(typeof team)
         mainMenu();
 })
 }
@@ -158,8 +158,8 @@ function internQuestions() {
  });
 }
 
-function renderPage(team) {
-    fs.writeFileSync(outputPath, team, "utf-8")
+function renderPage() {
+    fs.writeFileSync(outputPath, render(team), "utf-8")
 }
 
 managerQuestions();
